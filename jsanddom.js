@@ -125,7 +125,21 @@
         return stng.test(sourceStr);  
      }
 
-     // write an example of a javascript closure
+ // write an example of a javascript closure 
+function MyClosure(secret) {  
+       var privateProperty = 'private';  
+        function privateFunction() 
+        {  
+            return secret;  
+        }  
+        return {  
+            getPrivate: function () {  
+                return privateProperty;  
+            },  
+            answerToLife: function () {  
+                return privateFunction();  
+           }  
+     };  
 
      // define a json object that represents a collection of people.
      // each person should have the following properties
@@ -135,7 +149,51 @@
      // - state
      // - zip
      // - a collection of phone numbers (home, work, mobile)
-
+      var people = [{  
+         FirstName: 'Sejal',  
+         LastName: 'Patel',  
+         City: 'Cedar Rapids',  
+         State: 'IA',  
+         Zip: '02864',  
+         PhoneNumbers: {  
+             Home: '319-656-6666',  
+             Mobile: '319-666-6663',  
+             Work: '319-555-5555'  
+         }  
+      },{  
+         FirstName: 'Koushik',  
+         LastName: 'Patel',  
+         City: 'Cedar Rapids',  
+         State: 'IA',  
+         Zip: '02864',  
+         PhoneNumbers: {  
+             Home: '319-985-6666',  
+             Mobile: '319-234-6663',  
+             Work: '319-123-5555'  
+         }    
+      },{  
+        FirstName: 'Seema',  
+         LastName: 'Patel',  
+         City: 'Cedar Rapids',  
+         State: 'IA',  
+         Zip: '02864',  
+         PhoneNumbers: {  
+             Home: '319-634-6666',  
+             Mobile: '319-111-6663',  
+             Work: '319-551-5555'  
+         }  
+      },{  
+        FirstName: 'Sejal',  
+         LastName: 'Patel',  
+         City: 'Cedar Rapids',  
+         State: 'IA',  
+         Zip: '02864',  
+         PhoneNumbers: {  
+             Home: '319-656-6666',  
+             Mobile: '319-666-6663',  
+             Work: '319-111-1234'  
+         }  
+      }]; 
 
      // Create a javascript object (DataTable) with the following:
      // A private columns property (string array)
@@ -148,18 +206,106 @@
      // .addColumns('column1', 'column2', 'column3');
      // .addRow('value1A', 'value1B', 'value1C');
      // .addRow('value2A', 'value2B', 'value2C');
+function DataTable() {  
+        var columns =[],rows = [];  
+         return {  
+             addColumns: function() {  
+                 var newCol = [],i;  
+                 for(i=0; i<arguments.length; i++) 
+                 {  
+                     if(typeof arguments[i] === 'string') 
+                     {  
+                         columns.push(arguments[i]);  
+                     }  
+                 }  
+                 return columns;  
+                },  
+             addRow: function() {  
+                 var i;  
+                 for(i=0; i<columns.length; i++) 
+                 {  
+                     if(i<arguments.length && (typeof arguments[i] === 'string')) 
+                     {  
+                        rows.push(arguments[i]);  
+                     } else 
+                     {  
+                         rows.push('');  
+                     }  
+                 }  
+                },  
+             getData: function() {  
+                var table = [],index = 0,row, i;  
+                while(index < rows.length) 
+                {  
+                   row = {};  
+                    for(i=0; i<columns.length;ic++) 
+                    {  
+                     row[columns[c]] = rows[index++];  
+                    }  
+                   table.push(row);  
+                }  
+                return table;  
+            }  
+        };  
+    } 
 
      // within div1, programatically create a
      // SELECT element (with multiple items) and a button.
      // when the button is clicked write out the name and value of the selected item to the console.
+ $(document).ready(function() {  
+        $('#qunit-testrunner-toolbar').append('<select id="MyOptions"><option>Option 1</option><option>Option 2</option><option>Option 3</option></select>');  
+        $('#qunit-testrunner-toolbar').append('<button id="MyLogButton">Log Option</button>');  
+        $('#MyLogButton').on('click', function() {  
+            console.log($('#MyOptions :selected').val());  
+        });  
+ });  
 
      // Write 5 different jQuery selectors to retrieve the
      // sample anchor in the markup below.
+     function getFooterCheckAllAnchor() { 
+         var checkAllAnchors = []; 
+         checkAllAnchors.push($('#check, #uncheck')); 
+         checkAllAnchors.push($('#footer a')); 
+         checkAllAnchors.push($('a.footer-anchor')); 
+         checkAllAnchors.push($('.footer-anchor')); 
+         checkAllAnchors.push($('#footer ul li:gt(4) a')); 
+         return checkAllAnchors; 
+      } 
 
      // Programatically create an array with 5 items.  Create a list item for each item in the array
      // and add the list items to the unordered list with an id of "list1".
+      $(document).ready(function() {  
+         var items = ['The Walking Dead', 'Game of Thrones', 'Breaking Bad', 'Better Call Saul', 'Bones'],i, ulist;  
+         ulist = $('<ul id="list1"/>');  
+         for(i=0; i<items.length; i++) 
+         {  
+             ulist.append('<li>' + items[i] + '</li>');  
+         }  
+      });  
 
      // Use javascript to add a list of checkboxes and 2 links
      // to the div with an id of "foobar"
      // When the first link is clicked, all the checkboxes should be checked (i.e. check all)
      // When the second link is clicked, all the checkboxes should be unchecked (i.e. uncheck all)
+$(document).ready(function() { 
+        var items = ['The Walking Dead', 'Game of Thrones', 'Breaking Bad', 'Better Call Saul', 'Bones'],i, footer, list; 
+         // Create our list of checkboxes 
+         footer = $('#footer'); 
+         list = footer.append('<ul style="list-style:none;"/>').find('ul'); 
+         for(i=0; i<items.length; i++) 
+         { 
+             list.append('<li><input type="checkbox">' + items[i] + '</input></li>'); 
+         } 
+         // Create our links 
+         list.append('<li><a id="check" class="footer-anchor">Check All</a></li>'); 
+         list.append('<li><a id="uncheck" class="footer-anchor">Uncheck All</a></li>'); 
+            // Create our event handlers 
+         footer.find('#check').on('click', function() 
+         { 
+             footer.find('input').prop('checked', true); 
+         }); 
+         footer.find('#uncheck').on('click', function() 
+         { 
+             footer.find('input').prop('checked', false); 
+         }); 
+  }); 
